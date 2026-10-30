@@ -1,0 +1,9 @@
+include README.rst
+include SEEDED_MODIFICATIONS.md
+include RELEASE_NOTES.md
+include cpp_src/*.cpp
+include cpp_src/*.h
+include cpp_src/pybind11/*.h
+include cpp_src/pybind11/detail/*.h
+
+include LICENSE
