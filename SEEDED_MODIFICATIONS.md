@@ -5,7 +5,7 @@ seeded and constrained cover enumeration.
 
 The release version is:
 
-`1.3+seeded.covers.1`
+`1.3+seeded.covers.2`
 
 It is not intended to represent an upstream `low_index` 1.3.1 release.
 
@@ -88,6 +88,15 @@ A reverse wake index is maintained incrementally during depth-first search and
 rolled back with the search state. This avoids rebuilding the reverse index for
 every recursive call.
 
+
+### Seeded-root propagation fixed point
+
+Before the rollback wake index is constructed, seeded-root short-relator
+propagation is repeated until a complete pass adds no new edge.  The final pass
+therefore runs on an unchanged root graph, leaving each unfinished cached
+relator state stopped at its first currently undefined directed slot.  This
+provides the synchronized initial state required by the rollback wake index.
+
 ### Root-fixed full-cycle elimination
 
 For an exact-degree seed root, full-cycle constraints that are already fully
@@ -98,8 +107,8 @@ conditions that cannot change below that root.
 
 ## Compatibility
 
-Calling the ordinary `permutation_reps` entry point continues to use the
-ordinary low_index search path.
+The ordinary `permutation_reps` entry point remains available, and its output
+compatibility is regression-tested against low_index 1.3.
 
 An empty seeded search with canonical minimality enabled is regression-tested
 against the ordinary API.
@@ -124,5 +133,4 @@ The release contains 34 regression tests covering:
 - public API exposure.
 
 The constrained-cover workflow was additionally validated against frozen exact
-output references during development before this release candidate was
-prepared.
+output references before this release was prepared.

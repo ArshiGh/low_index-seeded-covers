@@ -8,7 +8,7 @@ finite index less than a given bound.
 
 The upstream ``low_index`` package is available on PyPI.  This repository is
 a downstream extension of low_index 1.3 for seeded and constrained cover
-enumeration, released as ``1.3+seeded.covers.1``.
+enumeration, released as ``1.3+seeded.covers.2``.
 
 For this release, install a wheel from the corresponding GitHub release or
 install directly from a source checkout:
@@ -17,8 +17,8 @@ install directly from a source checkout:
 
     python -m pip install .
 
-The ordinary ``permutation_reps`` API remains available with the upstream
-low_index 1.3 search behavior.
+The ordinary ``permutation_reps`` API remains available.  Its output
+compatibility is regression-tested against low_index 1.3.
 
 Here is a sample computation:
 

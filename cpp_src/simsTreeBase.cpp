@@ -130,9 +130,9 @@ SimsTreeBase::_initialize_seed_relabelings(
                 edge[2] + 1));
     }
 
-    // For now this optimization is intentionally restricted to
-    // exact-degree seeded completion searches. This matches our
-    // current targeted-cover workflow.
+    // This optimization is intentionally restricted to exact-degree
+    // seeded completion searches, the setting for which the current
+    // correctness and validation results apply.
     if (seed_degree == 0 ||
         seed_degree != _root.max_degree()) {
         return;
@@ -407,7 +407,23 @@ SimsTreeBase::_apply_initial_edges(
         }
     }
 
-    return _root.relators_may_lift(_short_relators);
+    // Establish the short-relator propagation fixed point before the
+    // wake index is constructed.  A single broad pass can add an edge
+    // late in the pass after an earlier cached relator state has already
+    // stopped at that slot; repeating until no edge is added ensures that
+    // the final pass sees a stable graph and leaves every cached state at
+    // its first currently unknown slot.
+    while (true) {
+        const unsigned int edges_before = _root.num_edges();
+
+        if (!_root.relators_may_lift(_short_relators)) {
+            return false;
+        }
+
+        if (_root.num_edges() == edges_before) {
+            return true;
+        }
+    }
 }
 
 SimsTreeBase::~SimsTreeBase() = default;
